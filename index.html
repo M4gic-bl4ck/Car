@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Para mi tiyita 💌</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f6dfdf, #f9eddc, #eadcf5);
+    font-family: Georgia, serif;
+    overflow: hidden;
+    transition: background 3s ease;
+}
+
+/* SOBRE */
+
+.inicio {
+    text-align: center;
+    cursor: pointer;
+    animation: aparecer 1.5s ease;
+}
+
+.sobre {
+    position: relative;
+    width: 190px;
+    height: 130px;
+    margin: auto;
+    background: #d8899b;
+    border-radius: 8px;
+    box-shadow: 0 15px 30px rgba(0,0,0,.2);
+    transition: transform .4s ease;
+}
+
+.sobre:hover {
+    transform: translateY(-8px) scale(1.03);
+}
+
+.sobre::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 95px solid transparent;
+    border-right: 95px solid transparent;
+    border-top: 70px solid #c87589;
+}
+
+.corazon {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+    z-index: 2;
+}
+
+.inicio h1 {
+    color: #704654;
+    margin-bottom: 5px;
+}
+
+.inicio p {
+    color: #805d67;
+}
+
+/* CARTA */
+
+.carta {
+    display: none;
+    width: min(90%, 650px);
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #fffaf1;
+    padding: 45px 35px;
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+    position: relative;
+    animation: abrir .9s ease;
+}
+
+.carta::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid #d9b6a5;
+    pointer-events: none;
+}
+
+h2 {
+    text-align: center;
+    color: #704654;
+    margin-top: 0;
+    font-size: 28px;
+}
+
+#texto {
+    font-size: 19px;
+    line-height: 1.8;
+    color: #45363a;
+    white-space: pre-wrap;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 21px;
+    background: #704654;
+    animation: parpadear .7s infinite;
+}
+
+/* MENSAJE FINAL */
+
+.final {
+    display: none;
+    text-align: center;
+    margin-top: 30px;
+    color: #704654;
+    animation: aparecer 2s ease;
+}
+
+.final h3 {
+    font-size: 28px;
+}
+
+.final p {
+    font-size: 18px;
+}
+
+/* CORAZONES */
+
+.flotante {
+    position: fixed;
+    bottom: -30px;
+    pointer-events: none;
+    animation: subir linear forwards;
+    opacity: .8;
+}
+
+/* CONFETI */
+
+.confeti {
+    position: fixed;
+    width: 9px;
+    height: 15px;
+    top: -20px;
+    animation: caer 3s linear forwards;
+    pointer-events: none;
+}
+
+/* ANIMACIONES */
+
+@keyframes subir {
+    from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: .8;
+    }
+
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes caer {
+    from {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    to {
+        transform: translateY(110vh) rotate(720deg);
+    }
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes abrir {
+    from {
+        opacity: 0;
+        transform: scale(.8) translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes parpadear {
+    50% {
+        opacity: 0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PANTALLA INICIAL -->
+
+<div class="inicio" id="inicio" onclick="abrirCarta()">
+
+    <div class="sobre">
+        <div class="corazon">💗</div>
+    </div>
+
+    <h1>Tienes una carta...</h1>
+    <p>Haz clic para abrirla 💌</p>
+
+</div>
+
+
+<!-- CARTA -->
+
+<div class="carta" id="carta">
+
+    <h2>Para mi tiyita 💗</h2>
+
+    <div id="texto"></div>
+    <span class="cursor" id="cursor"></span>
+
+    <div class="final" id="final">
+
+        <h3>✨ Feliz cumpleaños, tiyita ✨</h3>
+
+        <p>
+            Gracias por formar parte de mi vida
+            y por todos los momentos que hemos compartido.
+        </p>
+
+        <p>
+            Te quiero muchísimo. 🫶
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const carta = [
+
+"Querida tiyita:\n\n",
+
+"Hoy quería hacerte algo diferente para tu cumpleaños. 💗\n\n",
+
+"Podría haberte comprado un regalo y ya, pero quería hacer algo que realmente fuera mío y que pudieras guardar como un pequeño recuerdo.\n\n",
+
+"Gracias por todos los momentos, por las risas y por estar ahí de una u otra manera.\n\n",
+
+"Espero que este nuevo año de tu vida esté lleno de cosas bonitas, momentos felices y muchísimas razones para sonreír.\n\n",
+
+"Y aunque probablemente esta página sea uno de los regalos más random que te hayan dado JAJAJA, la hice con muchísimo cariño.\n\n",
+
+"Te quiero muchísimo, tiyita. ❤️\n\n"
+
+];
+
+let textoCompleto = carta.join("");
+let i = 0;
+
+
+/* ABRIR CARTA */
+
+function abrirCarta() {
+
+    document.getElementById("inicio").style.display = "none";
+
+    document.getElementById("carta").style.display = "block";
+
+    document.body.style.background =
+        "linear-gradient(135deg, #ead8e8, #f7e4df, #e5d8f2)";
+
+    crearCorazones();
+
+    escribir();
+
+}
+
+
+/* ESCRITURA */
+
+function escribir() {
+
+    if (i < textoCompleto.length) {
+
+        document.getElementById("texto").textContent +=
+            textoCompleto.charAt(i);
+
+        i++;
+
+        let velocidad = 32;
+
+        if (textoCompleto.charAt(i - 1) === "\n") {
+            velocidad = 350;
+        }
+
+        setTimeout(escribir, velocidad);
+
+    } else {
+
+        document.getElementById("cursor").style.display = "none";
+
+        document.getElementById("final").style.display = "block";
+
+        confeti();
+
+    }
+
+}
+
+
+/* CORAZONES */
+
+function crearCorazones() {
+
+    setInterval(() => {
+
+        const corazon = document.createElement("div");
+
+        corazon.className = "flotante";
+
+        const simbolos = ["💗", "💕", "♡", "🌸", "✨"];
+
+        corazon.textContent =
+            simbolos[Math.floor(Math.random() * simbolos.length)];
+
+        corazon.style.left =
+            Math.random() * 100 + "vw";
+
+        corazon.style.fontSize =
+            (15 + Math.random() * 20) + "px";
+
+        corazon.style.animationDuration =
+            (5 + Math.random() * 5) + "s";
+
+        document.body.appendChild(corazon);
+
+        setTimeout(() => {
+            corazon.remove();
+        }, 10000);
+
+    }, 700);
+
+}
+
+
+/* CONFETI */
+
+function confeti() {
+
+    for (let i = 0; i < 100; i++) {
+
+        const pieza = document.createElement("div");
+
+        pieza.className = "confeti";
+
+        pieza.style.left =
+            Math.random() * 100 + "vw";
+
+        pieza.style.background =
+            ["#d8899b", "#e9b872", "#9bb7d4",
+             "#b99bd4", "#91c7a5"]
+             [Math.floor(Math.random() * 5)];
+
+        pieza.style.animationDelay =
+            Math.random() * 1.5 + "s";
+
+        document.body.appendChild(pieza);
+
+        setTimeout(() => {
+            pieza.remove();
+        }, 5000);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
